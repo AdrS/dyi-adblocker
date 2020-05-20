@@ -2,27 +2,29 @@
 An ad blocking chrome extension that blocks content based on domain names
 
 # Installation
-- go to chrome://extensions/
-- enable Developer Mode
-- click Load upacked extension and navigate to the repo folder
+- Go to chrome://extensions/
+- Enable Developer Mode
+- Click Load upacked extension and navigate to the repo folder
 
 # Updating the Blacklist
-- download a blacklist from  [github.com/StevenBlack/hosts](https://github.com/StevenBlack/hosts/blob/master/hosts.zip) or create your own
-- convert the list into a Javascript Array.
+- Download a blacklist from  [github.com/StevenBlack/hosts](https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts) or create your own
 
-- for the Steven's blacklist:
-  - $ `grep "^0\.0\.0\.0" hosts | cut -d ' ' -f2 | sed 's/\([^\n]*\)/"*:\/\/*.\1\/*",/' > blocked_domains.js`
-  - Now edit the first and last lines of blocked_domains.js so that it is a valid JavaScript array that looks like this:
+- Convert the list into a javascript array:
+  - $ `grep -v "0\.0\.0\.0 0\.0\.0\.0$" hosts | awk 'BEGIN{print "var blocked_domains = ["}/^0\.0\.0\.0/{printf "\"*://*.%s/*\",\n", $2
+}END{print "];"}' > blocked_domains.js`
+  - blocked_domains.js should be a valid JavaScript array that looks like this:
     ```
-    var blocked_domains = [
-    "*://*.lb.usemaxserver.de/*",
-    "*://*.tracking.klickthru.com/*",
+	var blocked_domains = [
+	"*://*.01mspmd5yalky8.com/*",
+	"*://*.0byv9mgbn0.com/*",
     ...
     ...
-    "*://*.zmedia.com/*",
-    "*://*.zv1.november-lax.com/*"];
+	"*://*.zukxd6fkxqn.com/*",
+	"*://*.zy16eoat1w.com/*",
+	];
     ```
- - reload the extension
+  - Note: JavaScript allows a trailing comma for the last element of an array
+ - Reload the extension
 
 # Credits
-The blacklist is from [github.com/StevenBlack/hosts](https://github.com/StevenBlack/hosts/blob/master/hosts.zip)
+The blacklist is from [github.com/StevenBlack/hosts](https://github.com/StevenBlack/hosts)
